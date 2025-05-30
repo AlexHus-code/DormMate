@@ -155,51 +155,40 @@ def change_application_status(request, pk, new_status):
     if new_status not in allowed_statuses:
         return HttpResponseForbidden("Недопустимый статус.")
 
-    # Студент может только отменить свою заявку, если она в ожидании
+    # Студент может только отклонить свою заявку
     if user.role == 'student':
         if application.user != user or application.status != 'pending' or new_status != 'rejected':
             return HttpResponseForbidden("У вас нет прав для этого действия.")
-
-    # Админ может всё
-    elif user.role == 'admin':
-        pass  # доступ разрешён
-
-    else:
+    elif user.role != 'admin':
         return HttpResponseForbidden("Доступ запрещён.")
 
-    # Обновляем статус заявки
+    # Получаем информацию о комнате
+    try:
+        room = Room.objects.get(number=application.room_number)
+    except Room.DoesNotExist:
+        return HttpResponseForbidden("Комната не найдена.")
+
+    student = application.user
+
+    # Обработка одобрения — перемещение в новую комнату
+    if new_status == 'approved':
+        old_room = student.room
+        if old_room and old_room != room:
+            old_room.residents.remove(student)
+        student.room = room
+        student.save()
+        room.residents.add(student)
+
+    # Присваиваем статус
     application.status = new_status
     application.save()
 
-    # Обновляем привязку комнаты к пользователю и ManyToMany связь
-    if new_status == 'approved':
-        try:
-            room = Room.objects.get(number=application.room_number)
-            # Обновляем ForeignKey пользователя
-            application.user.room = room
-            application.user.save()
-
-            # Добавляем пользователя в ManyToMany room.residents
-            room.residents.add(application.user)
-        except Room.DoesNotExist:
-            # Если комната не найдена, сбрасываем связь
-            if application.user.room:
-                # Убираем пользователя из прошлой комнаты, если была
-                application.user.room.residents.remove(application.user)
-            application.user.room = None
-            application.user.save()
-    else:
-        # Если статус не approved — удаляем пользователя из комнаты
-        if application.user.room:
-            application.user.room.residents.remove(application.user)
-        application.user.room = None
-        application.user.save()
-
-    # Отправка email-уведомления
+    # Формируем письмо
     subject = f"Статус вашей заявки: {application.get_status_display()}"
     message = (
-        f"Здравствуйте, {application.user.username}!\n\n"
-        f"Статус вашей заявки на поселение изменён на: {application.get_status_display()}.\n\n"
+        f"Здравствуйте, {student.username}!\n\n"
+        f"Статус вашей заявки на поселение в комнату №{room.number} (этаж {room.floor}) "
+        f"изменён на: {application.get_status_display()}.\n\n"
         "Вы можете проверить статус в своём аккаунте.\n\n"
         "С уважением,\n"
         "Команда общежития."
@@ -209,7 +198,7 @@ def change_application_status(request, pk, new_status):
         subject,
         message,
         settings.DEFAULT_FROM_EMAIL,
-        application.user.email
+        student.email
     )
 
     return redirect('application-detail', pk=pk)
@@ -221,19 +210,27 @@ def reset_application_status(request, pk):
     application = get_object_or_404(Application, pk=pk)
     user = application.user  # Пользователь, подавший заявку
 
+    old_room = user.room
+    room_info = "не была привязана ни к одной комнате"
+
+    # Если пользователь был заселён — удаляем связь
+    if old_room:
+        old_room.residents.remove(user)
+        room_info = f"Комната №{old_room.number} (этаж {old_room.floor})"
+        user.room = None
+        user.save()
+
+    # Сброс статуса заявки
     application.status = 'pending'
     application.save()
 
-    # Сброс комнаты
-    user.room = None
-    user.save()
-
-    # Отправка email-уведомления
+    # Формируем письмо
     subject = f"Статус вашей заявки: {application.get_status_display()}"
     message = (
         f"Здравствуйте, {user.username}!\n\n"
-        f"Статус вашей заявки на поселение изменён на: {application.get_status_display()}.\n\n"
-        "Вы можете проверить статус в своём аккаунте.\n\n"
+        f"Статус вашей заявки был сброшен в статус: {application.get_status_display()}.\n"
+        f"Ранее вы были прикреплены к: {room_info} — эта привязка была удалена.\n\n"
+        "Вы можете подать новую заявку в другую комнату.\n\n"
         "С уважением,\n"
         "Команда общежития."
     )
