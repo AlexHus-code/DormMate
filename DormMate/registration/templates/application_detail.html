@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Детали заявки от {{ application.user.username }}</h1>
+
+<p><strong>Номер комнаты:</strong> {{ application.room_number }}</p>
+<p><strong>Дата подачи:</strong> {{ application.created_at|date:"d.m.Y H:i" }}</p>
+<p><strong>Комментарий:</strong> {{ application.comment|linebreaks }}</p>
+<p><strong>Статус заявки:</strong> {{ application.get_status_display }}</p>
+
+<h2>Вложения:</h2>
+<ul>
+    {% if application.medical_doc %}
+        <li><a href="{{ application.medical_doc.url }}" target="_blank">Медицинский документ</a></li>
+    {% endif %}
+    {% if application.bank_receipt %}
+        <li><a href="{{ application.bank_receipt.url }}" target="_blank">Квитанция банка</a></li>
+    {% endif %}
+    {% if application.application %}
+        <li><a href="{{ application.application.url }}" target="_blank">Заявление</a></li>
+    {% endif %}
+    {% if application.student_card %}
+        <li><a href="{{ application.student_card.url }}" target="_blank">Студенческий билет</a></li>
+    {% endif %}
+    {% if application.application_partion_pay %}
+        <li><a href="{{ application.application_partion_pay.url }}" target="_blank">Часть оплаты заявления</a></li>
+    {% endif %}
+    {% if application.aplication_parent_pay %}
+        <li><a href="{{ application.aplication_parent_pay.url }}" target="_blank">Оплата от родителей</a></li>
+    {% endif %}
+    {% if application.contract %}
+        <li><a href="{{ application.contract.url }}" target="_blank">Договор</a></li>
+    {% endif %}
+    {% if application.personal_account %}
+        <li><a href="{{ application.personal_account.url }}" target="_blank">Лицевой счет</a></li>
+    {% endif %}
+</ul>
+
+<hr>
+
+{% if request.user == application.user and application.status == 'pending' %}
+    <!-- Студент может отменить только свою заявку в статусе "pending" -->
+    <a href="{% url 'change-application-status' application.pk 'rejected' %}" class="btn btn-danger">Отменить заявку</a>
+
+{% elif request.user.role == 'admin' %}
+    {% if application.status == 'pending' %}
+        <a href="{% url 'change-application-status' application.pk 'approved' %}" class="btn btn-success">Подтвердить</a>
+        <a href="{% url 'change-application-status' application.pk 'rejected' %}" class="btn btn-danger">Отклонить</a>
+    {% else %}
+        <p><em>Заявка была {{ application.get_status_display }}</em></p>
+        <form method="post" action="{% url 'change-application-status' application.pk 'pending' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-warning">Сбросить в ожидание</button>
+        </form>
+    {% endif %}
+{% endif %}
+
+<br><br>
+<a href="{% url 'application-list' %}">← Вернуться к списку заявок</a>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Личный кабинет{% endblock %}
+
+{% block content %}
+<div class="room-container">
+    <h2>Личный кабинет — {{ user.username }}</h2>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+    <p><strong>Роль:</strong> {{ user.get_role_display }}</p>
+
+    {% if user.role == 'admin' %}
+        <div class="admin-panel">
+            <a href="{% url 'create-admin' %}" class="admin-button">Создать администратора</a>
+            <a href="{% url 'add-room' %}" class="admin-button">Добавить комнату</a>
+            <a href="{% url 'user-list' %}" class="admin-button">Список пользователей</a>
+            <a href="{% url 'application-list' %}" class="admin-button">Список заявок</a>
+        </div>
+    {% else %}
+        {% if user.room %}
+            <p><strong>Ваша комната:</strong> №{{ user.room.number }}</p>
+        {% else %}
+            <p>Вы пока не закреплены за комнатой.</p>
+        {% endif %}
+        <a href="{% url 'application-list' %}?status=all" class="apply-link">Мои заявки</a>
+    {% endif %}
+
+    <div class="account-actions">
+        <a href="{% url 'logout' %}" class="logout-button">Выйти</a>
+        <form action="{% url 'delete-account' %}" method="post" class="delete-form" onsubmit="return confirmDelete();">
+            {% csrf_token %}
+            <button type="submit" class="delete-button">Удалить аккаунт</button>
+        </form>
+    </div>
+</div>
+
+<script>
+function confirmDelete() {
+    return confirm("Вы уверены, что хотите удалить аккаунт? Это действие необратимо.");
+}
+</script>
+{% endblock %}

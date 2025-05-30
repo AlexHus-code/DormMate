@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static%}
+{% block title %}Заявки{% endblock title %}
+ {% block css_files %}{% endblock css_files %}
+{% block content %}
+<h1>Список всех заявок</h1>
+
+<table border="1">
+    <tr>
+        <th>ID</th>
+        <th>Комната</th>
+        <th>Комментарий</th>
+        <th>Файлы</th>
+    </tr>
+    {% for application in applications %}
+    <tr>
+        <td>{{ application.id }}</td>
+        <td>{{ application.room_number }}</td>
+        <td>{{ application.comment }}</td>
+        <td>
+            {% for file in application.files %}
+                <strong>{{ file.label }}:</strong>
+                <a href="{{ file.url }}" download>Скачать</a><br>
+            {% endfor %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock content %}

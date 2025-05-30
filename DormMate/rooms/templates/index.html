@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Main{% endblock title %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static "rooms/base.css" %}">
+{% endblock css_files %}
+
+{% block content %}
+
+{% if has_rooms %}
+<div class="floor-selector-container">
+    <form method="GET" action="{% url 'floor-selector' %}" class="floor-form">
+        {% csrf_token %}
+        <label for="floor" class="floor-label">Выберите этаж:</label>
+        <select name="floor" id="floor" class="floor-select">
+            {% for floor in floors %}
+                <option value="{{ floor }}" {% if floor == selected_floor %}selected{% endif %}>
+                    {{ floor }} этаж
+                </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="floor-submit-btn">Показать</button>
+    </form>
+</div>
+
+<!-- Легенда -->
+<div class="legend-container">
+  <div class="legend-item">
+    <div class="legend-color-box legend-empty"></div> Свободная комната
+  </div>
+  <div class="legend-item">
+    <div class="legend-color-box legend-partial"></div> Частично занятая
+  </div>
+  <div class="legend-item">
+    <div class="legend-color-box legend-full"></div> Полностью занятая
+  </div>
+</div>
+
+<div class="rooms-grid-plan-container">
+    <h2 class="rooms-title">Комнаты на {{ selected_floor }} этаже</h2>
+    {% if rooms %}
+        <div class="room-plan-grid">
+            {% for room in rooms %}
+                <a href="{% url 'room-detail' room.number %}" class="room-square room-{{ room.occupancy_status }}">
+                    <span class="room-number">{{ room.number }}</span>
+                </a>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-rooms-msg">На этом этаже нет комнат.</p>
+    {% endif %}
+</div>
+
+{% else %}
+<div class="rooms-list-container">
+    <p class="no-rooms-msg">Ни одной комнаты не обнаружено.</p>
+</div>
+{% endif %}
+
+{% endblock content %}

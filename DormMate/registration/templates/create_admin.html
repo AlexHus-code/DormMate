@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Создать администратора{% endblock %}
+{% block content %}
+<div class="room-container">
+    <h2>Создание администратора</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="apply-link">Создать</button>
+    </form>
+    <a href="{% url 'account' %}" class="secondary-link">Назад</a>
+</div>
+{% endblock %}

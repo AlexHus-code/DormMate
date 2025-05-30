@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Подача заявки{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Форма подачи заявки</h2>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form action="{% url 'form-thank-you' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            {{ form.room_number.label_tag }}<br>
+            {{ form.room_number }}
+            {% if form.room_number.errors %}
+                <div class="form-error">{{ form.room_number.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.medical_doc.label_tag }}<br>
+            {{ form.medical_doc }}
+            {% if form.medical_doc.errors %}
+                <div class="form-error">{{ form.medical_doc.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.bank_receipt.label_tag }}<br>
+            {{ form.bank_receipt }}
+            {% if form.bank_receipt.errors %}
+                <div class="form-error">{{ form.bank_receipt.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.application.label_tag }}<br>
+            {{ form.application }}
+            {% if form.application.errors %}
+                <div class="form-error">{{ form.application.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.student_card.label_tag }}<br>
+            {{ form.student_card }}
+            {% if form.student_card.errors %}
+                <div class="form-error">{{ form.student_card.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.application_partion_pay.label_tag }}<br>
+            {{ form.application_partion_pay }}
+            {% if form.application_partion_pay.errors %}
+                <div class="form-error">{{ form.application_partion_pay.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.aplication_parent_pay.label_tag }}<br>
+            {{ form.aplication_parent_pay }}
+            {% if form.aplication_parent_pay.errors %}
+                <div class="form-error">{{ form.aplication_parent_pay.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.contract.label_tag }}<br>
+            {{ form.contract }}
+            {% if form.contract.errors %}
+                <div class="form-error">{{ form.contract.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.personal_account.label_tag }}<br>
+            {{ form.personal_account }}
+            {% if form.personal_account.errors %}
+                <div class="form-error">{{ form.personal_account.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.comment.label_tag }}<br>
+            {{ form.comment }}
+            {% if form.comment.errors %}
+                <div class="form-error">{{ form.comment.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Отправить заявку</button>
+    </form>
+</div>
+{% endblock %}
