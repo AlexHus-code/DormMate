@@ -17,7 +17,8 @@ import ssl
 from email.mime.text import MIMEText
 from django.http import HttpResponseForbidden
 from django.shortcuts import redirect
-
+from django.db.models import BooleanField, Case, When, Value, IntegerField, Q, ExpressionWrapper
+from django.db import models
 
 def register_view(request):
     if request.method == 'POST':
@@ -98,24 +99,68 @@ def user_list_view(request):
 
 @login_required
 def application_list_view(request):
-    status = request.GET.get('status', 'all')  # теперь 'all' по умолчанию
+    status = request.GET.get('status', 'all')
 
     if request.user.role == 'admin':
+        base_queryset = Application.objects.annotate(
+            # True если пользователь подал заявку на свою текущую комнату
+            is_returning_to_same_room=Case(
+                When(user__room__number=models.F('room_number'), then=Value(True)),
+                default=Value(False),
+                output_field=BooleanField()
+            ),
+            # True если пользователь вообще заселён
+            was_resident=ExpressionWrapper(
+                Q(user__room__isnull=False),
+                output_field=BooleanField()
+            )
+        )
+
         if status == 'all':
-            applications = Application.objects.all().order_by('-created_at')
+            applications = base_queryset.order_by(
+                '-is_returning_to_same_room',  # в первую очередь — заявки на ту же комнату
+                '-was_resident',               # затем — все, кто жил ранее
+                '-created_at'                  # затем — по дате
+            )
         else:
-            applications = Application.objects.filter(status=status).order_by('-created_at')
+            applications = base_queryset.filter(status=status).order_by(
+                '-is_returning_to_same_room',
+                '-was_resident',
+                '-created_at'
+            )
     else:
+        # Для обычных студентов — только их заявки
+        base_queryset = Application.objects.filter(user=request.user).annotate(
+            is_returning_to_same_room=Case(
+                When(user__room__number=models.F('room_number'), then=Value(True)),
+                default=Value(False),
+                output_field=BooleanField()
+            ),
+            was_resident=ExpressionWrapper(
+                Q(user__room__isnull=False),
+                output_field=BooleanField()
+            )
+        )
+
         if status == 'all':
-            applications = Application.objects.filter(user=request.user).order_by('-created_at')
+            applications = base_queryset.order_by(
+                '-is_returning_to_same_room',
+                '-was_resident',
+                '-created_at'
+            )
         else:
-            applications = Application.objects.filter(user=request.user, status=status).order_by('-created_at')
+            applications = base_queryset.filter(status=status).order_by(
+                '-is_returning_to_same_room',
+                '-was_resident',
+                '-created_at'
+            )
 
     context = {
         'applications': applications,
         'current_status': status,
     }
     return render(request, 'application_list.html', context)
+
 
 
 

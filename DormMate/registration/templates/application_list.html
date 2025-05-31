@@ -1,5 +1,3 @@
-<!-- templates/application_list.html -->
-
 {% extends 'base.html' %}
 
 {% block content %}
@@ -14,7 +12,6 @@
      class="btn {% if current_status == 'approved' %}btn-primary{% else %}btn-secondary{% endif %}">Подтверждённые</a>
   <a href="{% url 'application-list' %}?status=rejected" 
      class="btn {% if current_status == 'rejected' %}btn-primary{% else %}btn-secondary{% endif %}">Отклонённые</a>
-  
 </div>
 
 <table>
@@ -35,7 +32,14 @@
         <td>{{ app.room_number }}</td>
         <td>{{ app.created_at|date:"d.m.Y H:i" }}</td>
         <td>{{ app.comment|truncatewords:10 }}</td>
-        <td>{{ app.get_status_display }}</td>
+        <td>
+          {{ app.get_status_display }}
+          {% if app.is_returning_to_same_room %}
+            <span style="color: green; font-weight: bold;">(Повторная заявка на текущую комнату)</span>
+          {% elif app.was_resident %}
+            <span style="color: orange;">(Ранее жил в общежитии)</span>
+          {% endif %}
+        </td>
         <td><a href="{% url 'application-detail' app.pk %}">Просмотреть</a></td>
       </tr>
     {% empty %}
@@ -45,4 +49,3 @@
 </table>
 
 {% endblock %}
-

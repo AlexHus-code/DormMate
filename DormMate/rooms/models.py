@@ -12,13 +12,12 @@ class Room(models.Model):
     price = models.DecimalField(max_digits=8, decimal_places=2)
     capacity = models.IntegerField()
     about = models.TextField(default="Звичайна кімната")
-    image = models.ImageField(upload_to='room_images/',default='room_images/default.jpg')
+    image = models.ImageField(upload_to='room_images/', default='room_images/default.jpg')
 
-    # ManyToMany с кастомным пользователем + уникальное related_name
     residents = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
         blank=True,
-        related_name='shared_rooms'  # например, доступ ко всем комнатам, где он живёт
+        related_name='shared_rooms'
     )
 
     def occupancy_status(self):
@@ -29,6 +28,12 @@ class Room(models.Model):
             return "empty"
         else:
             return "partial"
+
+    def occupied_slots(self):
+        return self.residents.count()
+
+    def free_slots(self):
+        return self.capacity - self.residents.count()
 
     def __str__(self):
         return f"Комната {self.number} (этаж {self.floor})"

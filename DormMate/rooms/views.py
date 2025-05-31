@@ -7,31 +7,13 @@ from django.shortcuts import get_object_or_404, redirect
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 
 
 
 
 
 
-def room_detail_view(request, number):
-    room = get_object_or_404(Room, number=number)
-    residents = room.residents.all()  # related_name='shared_rooms'
-
-    total_slots = room.capacity
-    available_slots = total_slots - residents.count()
-
-    has_pending_application = False
-    if request.user.is_authenticated and request.user.role == 'student':
-        has_pending_application = Application.objects.filter(user=request.user, status='pending').exists()
-
-    context = {
-        'room': room,
-        'residents': residents,
-        'total_slots': total_slots,
-        'available_slots': available_slots,
-        'has_pending_application': has_pending_application,
-    }
-    return render(request, 'room_detail.html', context)
 
 
 def delete_room_view(request, number):
@@ -58,7 +40,9 @@ def floor_selector_view(request):
 
     # Выбираем этаж — либо из запроса, либо первый в списке
     selected_floor = request.GET.get('floor') or floors[0]
-    rooms = Room.objects.filter(floor=selected_floor)
+
+    # Сортировка по номеру комнаты
+    rooms = Room.objects.filter(floor=selected_floor).order_by('number')
 
     return render(request, 'index.html', {
         'floors': floors,
@@ -125,3 +109,73 @@ def aplication_list_view(request):
         'applications': apps_with_files,
     })
   
+User = get_user_model()
+
+def is_admin(user):
+    return user.is_authenticated and user.role == 'admin'
+
+def room_detail_view(request, number):
+    room = get_object_or_404(Room, number=number)
+    residents = room.residents.all()
+    total_slots = room.capacity
+    available_slots = total_slots - residents.count()
+
+    all_users = []
+    if request.user.is_authenticated and request.user.role == 'admin':
+        # Студенты без комнаты, которые ещё не добавлены в эту
+        all_users = User.objects.filter(
+            role='student',
+            room__isnull=True
+        ).exclude(id__in=residents.values_list('id', flat=True))
+
+    context = {
+        'room': room,
+        'residents': residents,
+        'total_slots': total_slots,
+        'available_slots': available_slots,
+        'all_users': all_users,
+    }
+    return render(request, 'room_detail.html', context)
+
+@user_passes_test(is_admin)
+def add_resident_view(request, number):
+    room = get_object_or_404(Room, number=number)
+
+    # Фильтруем только студентов, которые ещё не живут в этой комнате
+    all_users = User.objects.filter(role='student').exclude(room=room)
+
+    if request.method == 'POST':
+        user_id = request.POST.get('user_id')
+        user = get_object_or_404(User, id=user_id)
+
+        if room.residents.count() >= room.capacity:
+            messages.error(request, 'Комната заполнена.')
+        elif user in room.residents.all():
+            messages.warning(request, 'Пользователь уже живёт в этой комнате.')
+        else:
+            room.residents.add(user)
+            user.room = room
+            user.save()
+            messages.success(request, f'{user.username} добавлен в комнату.')
+
+        return redirect('room-detail', number=number)
+
+    return render(request, 'rooms/room_detail.html', {
+        'room': room,
+        'all_users': all_users,
+        'residents': room.residents.all(),
+        # другие необходимые данные
+    })
+
+@user_passes_test(is_admin)
+def remove_resident_view(request, number, user_id):
+    room = get_object_or_404(Room, number=number)
+    user = get_object_or_404(User, id=user_id)
+
+    room.residents.remove(user)
+    if user.room == room:
+        user.room = None
+        user.save()
+
+    messages.success(request, f'{user.username} удалён из комнаты.')
+    return redirect('room-detail', number=number)

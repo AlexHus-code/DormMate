@@ -18,11 +18,35 @@
                 <h2>Проживающие:</h2>
                 <ul class="student-list">
                     {% for resident in residents %}
-                        <li>{{ resident.username }}</li>
+                        <li>
+                            {{ resident.username }}
+                            {% if user.is_authenticated and user.role == "admin" %}
+                                <form action="{% url 'remove-resident' room.number resident.id %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Удалить пользователя из комнаты?')">Удалить</button>
+                                </form>
+                            {% endif %}
+                        </li>
                     {% empty %}
                         <li>Пока никто не проживает</li>
                     {% endfor %}
                 </ul>
+
+                {% if user.is_authenticated and user.role == "admin" %}
+                    <div class="room-section" style="margin-top: 20px;">
+                        <h3>Добавить пользователя:</h3>
+                        <form method="post" action="{% url 'add-resident' room.number %}">
+                            {% csrf_token %}
+                            <select name="user_id" required>
+                                <option value="" disabled selected>Выберите пользователя</option>
+                                {% for u in all_users %}
+                                    <option value="{{ u.id }}">{{ u.username }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-primary">Добавить</button>
+                        </form>
+                    </div>
+                {% endif %}
             </div>
 
             <div class="room-section">
@@ -51,7 +75,7 @@
                     {% endif %}
                 {% elif user.role == "admin" %}
                     <div class="room-full">
-                        <p>Вы вошли как администратор. Поселение недоступно.</p>
+                        <p>Вы вошли как администратор.</p>
                     </div>
                 {% endif %}
             {% else %}

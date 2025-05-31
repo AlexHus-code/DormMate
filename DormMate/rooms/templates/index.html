@@ -37,21 +37,24 @@
     <div class="legend-color-box legend-full"></div> Полностью занятая
   </div>
 </div>
-
-<div class="rooms-grid-plan-container">
-    <h2 class="rooms-title">Комнаты на {{ selected_floor }} этаже</h2>
-    {% if rooms %}
-        <div class="room-plan-grid">
-            {% for room in rooms %}
-                <a href="{% url 'room-detail' room.number %}" class="room-square room-{{ room.occupancy_status }}">
-                    <span class="room-number">{{ room.number }}</span>
-                </a>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p class="no-rooms-msg">На этом этаже нет комнат.</p>
-    {% endif %}
+<div class="room-tiles-container">
+    <div class="room-plan-grid">
+        {% for room in rooms %}
+            <a href="{% url 'room-detail' room.number %}" class="room-tile room-{{ room.occupancy_status }}">
+                <div class="tile-header">
+                    №{{ room.number }}
+                </div>
+                <div class="tile-body">
+                    <div class="tile-item"><strong>Цена:</strong> {{ room.price }} ₴</div>
+                    <div class="tile-item"><strong>Мест:</strong> {{ room.capacity }}</div>
+                    <div class="tile-item"><strong>Занято:</strong> {{ room.occupied_slots }}</div>
+                    <div class="tile-item"><strong>Свободно:</strong> {{ room.free_slots }}</div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
 </div>
+
 
 {% else %}
 <div class="rooms-list-container">
