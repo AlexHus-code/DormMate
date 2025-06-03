@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Дякуємо за подання заявки{% endblock title %}
+
+{% block content %}
+<div class="thank-you-container">
+    <h1 class="thank-you-title">Дякуємо, {{ user.username }}!</h1>
+    <p class="thank-you-message">
+        Ваша заявка на поселення успішно надіслана. Ми перевіримо надані документи та надішлемо вам сповіщення на електронну пошту після розгляду.
+    </p>
+
+    <a href="{% url 'floor-selector' %}" class="btn btn-primary">Повернутися на головну</a>
+</div>
+{% endblock content %}

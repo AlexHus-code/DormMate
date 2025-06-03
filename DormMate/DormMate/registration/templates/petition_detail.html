@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}Петиція: {{ petition.title }}{% endblock %}
+
+{% block content %}
+<div class="petitiondetail-wrapper">
+    <h2 class="petitiondetail-title">{{ petition.title }}</h2>
+    
+    <div class="petitiondetail-info">
+        <p><strong>Автор:</strong> {{ petition.author.username }}</p>
+        <p><strong>Створено:</strong> {{ petition.created_at|date:"d.m.Y H:i" }}</p>
+        <p><strong>Опис:</strong></p>
+        <p>{{ petition.description|linebreaksbr }}</p>
+        <p><strong>Кількість голосів:</strong> {{ petition.total_votes }}</p>
+    </div>
+
+    <div class="petitiondetail-vote">
+        {% if not user_has_voted %}
+            <form method="post" action="{% url 'vote-petition' petition.id %}">
+                {% csrf_token %}
+                <button type="submit" class="petitionlist-btn active">Голосувати</button>
+            </form>
+        {% else %}
+            <p class="petitiondetail-voted">Ви вже проголосували за цю петицію.</p>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'petition-list' %}" class="petitionlist-btn">← До списку петицій</a>
+
+
+    <h3 class="petitiondetail-subtitle">Відповіді адміністрації:</h3>
+    {% if responses %}
+        <ul class="petitiondetail-responses">
+            {% for response in responses %}
+                <li class="petitiondetail-response-item">
+                    <p>{{ response.response_text|linebreaksbr }}</p>
+                    <small class="petitiondetail-responder">
+                        Відповів: {{ response.responder.username }}, {{ response.created_at|date:"d.m.Y H:i" }}
+                    </small>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="petitiondetail-empty">Поки що відповідей немає.</p>
+    {% endif %}
+
+    {% if response_form %}
+        <hr>
+        <h3 class="petitiondetail-subtitle">Додати відповідь</h3>
+        <form method="post" action="">
+            {% csrf_token %}
+            {{ response_form.as_p }}
+            <button type="submit" class="petitionlist-btn active">Надіслати відповідь</button>
+        </form>
+    {% endif %}
+</div>
+{% endblock %}

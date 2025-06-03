@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Список користувачів{% endblock %}
+
+{% block content %}
+<div class="userlist-wrapper">
+    <div class="userlist-header">
+        <h2>Список користувачів</h2>
+    </div>
+
+    <ul class="userlist">
+        {% for user in users %}
+            <li class="userlist-item">
+                <div class="user-info">
+                    <span class="user-name">{{ user.username }}</span>
+                    <span class="user-role">{{ user.get_role_display }}</span>
+                    <span class="user-email">{{ user.email }}</span>
+                </div>
+                <div class="user-room">
+                    {% if user.room %}
+                        Кімната №{{ user.room.number }}
+                    {% elif user.role == 'student' %}
+                        Не поселений
+                    {% endif %}
+                </div>
+            </li>
+        {% empty %}
+            <li class="userlist-empty">Немає зареєстрованих користувачів.</li>
+        {% endfor %}
+    </ul>
+
+    <div class="userlist-back">
+        <a href="{% url 'account' %}" class="secondary-link">Назад</a>
+    </div>
+</div>
+{% endblock %}

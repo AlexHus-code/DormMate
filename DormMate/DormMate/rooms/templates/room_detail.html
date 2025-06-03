@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Кімната №{{ room.number }}{% endblock title %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static "rooms/base.css" %}">
+{% endblock css_files %}
+
+{% block content %}
+<div class="room-container">
+    <h1 class="room-title">Кімната №{{ room.number }} на {{ room.floor }} поверсі</h1>
+
+    <div class="room-content-flex">
+        <!-- Ліва колонка -->
+        <div class="room-details">
+            <div class="room-section">
+                <h2>Проживають:</h2>
+                <ul class="student-list">
+                    {% for resident in residents %}
+                        <li>
+                            {{ resident.username }}
+                            {% if user.is_authenticated and user.role == "admin" %}
+                                <form action="{% url 'remove-resident' room.number resident.id %}" method="post" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Видалити користувача з кімнати?')">Видалити</button>
+                                </form>
+                            {% endif %}
+                        </li>
+                    {% empty %}
+                        <li>Поки ніхто не проживає</li>
+                    {% endfor %}
+                </ul>
+
+                {% if user.is_authenticated and user.role == "admin" %}
+                    <div class="room-section" style="margin-top: 20px;">
+                        <h3>Додати користувача:</h3>
+                        <form method="post" action="{% url 'add-resident' room.number %}">
+                            {% csrf_token %}
+                            <select name="user_id" required>
+                                <option value="" disabled selected>Оберіть користувача</option>
+                                {% for u in all_users %}
+                                    <option value="{{ u.id }}">{{ u.username }}</option>
+                                {% endfor %}
+                            </select>
+                            <button type="submit" class="btn btn-primary">Додати</button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="room-section">
+                <p><strong>Ціна за місяць:</strong> {{ room.price }} ₴</p>
+                <p><strong>Опис:</strong> {{ room.about }}</p>
+                <p><strong>Вільно:</strong> {{ available_slots }} з {{ total_slots }} місць</p>
+                <p><strong>Заявок у черзі:</strong> {{ pending_applications_count }}</p>
+            </div>
+
+            {% if user.is_authenticated %}
+                {% if user.role == "student" %}
+                    {% if has_pending_application %}
+                        <div class="room-full">
+                            <p>Ви вже подали заявку на поселення. Очікуйте розгляду.</p>
+                        </div>
+                    {% else %}
+                        {% if available_slots > 0 %}
+                            <div class="room-available">
+                                <p>У кімнаті є вільні місця</p>
+                                <a href="{% url 'room-form' room.number %}" class="apply-link">Подати заяву на поселення</a>
+                            </div>
+                        {% else %}
+                            <div class="room-full">
+                                <p>У кімнаті немає вільних місць</p>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                {% elif user.role == "admin" %}
+                    <div class="room-full">
+                        <p>Ви увійшли як адміністратор.</p>
+                    </div>
+                {% endif %}
+            {% else %}
+                <div class="room-full">
+                    <p>Щоб подати заяву, необхідно <a href="{% url 'register' %}" class="room-link">зареєструватися</a> та <a href="{% url 'login' %}" class="room-link">увійти</a> в систему.</p>
+                </div>
+            {% endif %}
+
+            {% if user.is_authenticated and user.role == "admin" %}
+                <form action="{% url 'delete-room' room.number %}" method="post" onsubmit="return confirm('Ви впевнені, що хочете видалити цю кімнату?');">
+                    {% csrf_token %}
+                    <button type="submit" class="delete-button">Видалити кімнату</button>
+                </form>
+            {% endif %}
+        </div>
+
+        <!-- Права колонка -->
+        <div class="room-image">
+            {% if room.image %}
+                <img src="{{ room.image.url }}" alt="Зображення кімнати {{ room.number }}" class="room-img">
+            {% else %}
+                <img src="{% static 'rooms/default.jpg' %}" alt="Немає зображення" class="room-img">
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="applist-wrapper">
+  <h1 class="applist-title">Список заявок</h1>
+
+  <div class="applist-filters">
+    <a href="{% url 'application-list' %}?status=all" 
+       class="applist-btn {% if current_status == 'all' and not only_returning %}active{% endif %}">Усі</a>
+    <a href="{% url 'application-list' %}?status=pending" 
+       class="applist-btn {% if current_status == 'pending' %}active{% endif %}">В очікуванні</a>
+    <a href="{% url 'application-list' %}?status=approved" 
+       class="applist-btn {% if current_status == 'approved' %}active{% endif %}">Підтверджені</a>
+    <a href="{% url 'application-list' %}?status=rejected" 
+       class="applist-btn {% if current_status == 'rejected' %}active{% endif %}">Відхилені</a>
+    <a href="{% url 'application-list' %}?returning=1" 
+       class="applist-btn {% if only_returning %}active{% endif %}">Повторні</a>
+  </div>
+
+  <div class="applist-table-wrapper">
+    <table class="applist-table">
+      <thead>
+        <tr>
+          <th>Користувач</th>
+          <th>Кімната</th>
+          <th>Дата подання</th>
+          <th>Коментар</th>
+          <th>Статус</th>
+          <th>Дії</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for app in applications %}
+          <tr>
+            <td>{{ app.user.username }}</td>
+            <td>{{ app.room_number }}</td>
+            <td>{{ app.created_at|date:"d.m.Y H:i" }}</td>
+            <td>{{ app.comment|truncatewords:10 }}</td>
+            <td>
+              {{ app.get_status_display }}
+              {% if app.is_returning_to_same_room %}
+                <span class="applist-note-return">Повторна заявка</span>
+              {% elif app.was_resident %}
+                <span class="applist-note-previous">Раніше проживав</span>
+              {% endif %}
+            </td>
+            <td><a href="{% url 'application-detail' app.pk %}" class="applist-view-link">Переглянути</a></td>
+          </tr>
+        {% empty %}
+          <tr><td colspan="6" class="applist-empty">Заявок поки немає</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="userlist-back">
+    <a href="{% url 'account' %}" class="secondary-link">Назад</a>
+  </div>
+</div>
+{% endblock %}

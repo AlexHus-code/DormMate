@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="application-detail-container">
+  <h1>Деталі заявки від {{ application.user.username }}</h1>
+
+  <div class="application-info">
+    <p><strong>Номер кімнати:</strong> {{ application.room_number }}</p>
+    <p><strong>Дата подання:</strong> {{ application.created_at|date:"d.m.Y H:i" }}</p>
+    <p><strong>Коментар:</strong> {{ application.comment|linebreaks }}</p>
+    <p><strong>Статус заявки:</strong> {{ application.get_status_display }}</p>
+  </div>
+
+  <h2>Додані файли:</h2>
+  <ul class="attachment-list">
+      {% if application.medical_doc %}
+          <li><a href="{{ application.medical_doc.url }}" target="_blank">Медичний документ</a></li>
+      {% endif %}
+      {% if application.bank_receipt %}
+          <li><a href="{{ application.bank_receipt.url }}" target="_blank">Банківська квитанція</a></li>
+      {% endif %}
+      {% if application.application %}
+          <li><a href="{{ application.application.url }}" target="_blank">Заява</a></li>
+      {% endif %}
+      {% if application.student_card %}
+          <li><a href="{{ application.student_card.url }}" target="_blank">Студентський квиток</a></li>
+      {% endif %}
+      {% if application.application_partion_pay %}
+          <li><a href="{{ application.application_partion_pay.url }}" target="_blank">Часткова оплата</a></li>
+      {% endif %}
+      {% if application.aplication_parent_pay %}
+          <li><a href="{{ application.aplication_parent_pay.url }}" target="_blank">Оплата від батьків</a></li>
+      {% endif %}
+      {% if application.contract %}
+          <li><a href="{{ application.contract.url }}" target="_blank">Договір</a></li>
+      {% endif %}
+      {% if application.personal_account %}
+          <li><a href="{{ application.personal_account.url }}" target="_blank">Особовий рахунок</a></li>
+      {% endif %}
+  </ul>
+
+  <hr>
+
+  {% if request.user == application.user and application.status == 'pending' %}
+      <a href="{% url 'change-application-status' application.pk 'rejected' %}" class="appdetail-btn danger">Скасувати заявку</a>
+
+  {% elif request.user.role == 'admin' %}
+      {% if application.status == 'pending' %}
+          <div class="admin-actions">
+            <a href="{% url 'change-application-status' application.pk 'approved' %}" class="appdetail-btn success">Підтвердити</a>
+            <a href="{% url 'change-application-status' application.pk 'rejected' %}" class="appdetail-btn danger">Відхилити</a>
+          </div>
+      {% else %}
+          <div class="appdetail-reset-group">
+            <p class="appdetail-reset-text">Заявку було {{ application.get_status_display }}</p>
+            <form method="post" action="{% url 'change-application-status' application.pk 'pending' %}">
+              {% csrf_token %}
+              <button type="submit" class="appdetail-btn warning">Повернути до очікування</button>
+            </form>
+          </div>
+      {% endif %}
+  {% endif %}
+
+  <br><br>
+  <a href="{% url 'application-list' %}" class="secondary-link">← Повернутися до списку заявок</a>
+</div>
+{% endblock %}

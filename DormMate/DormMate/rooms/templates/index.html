@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Головна{% endblock title %}
+
+{% block css_files %}
+<link rel="stylesheet" href="{% static "rooms/base.css" %}">
+{% endblock css_files %}
+
+{% block content %}
+
+{% if has_rooms %}
+<div class="floor-selector-container">
+    <form method="GET" action="{% url 'floor-selector' %}" class="floor-form">
+        {% csrf_token %}
+        <label for="floor" class="floor-label">Оберіть поверх:</label>
+        <select name="floor" id="floor" class="floor-select">
+            {% for floor in floors %}
+                <option value="{{ floor }}" {% if floor == selected_floor %}selected{% endif %}>
+                    {{ floor }} поверх
+                </option>
+            {% endfor %}
+        </select>
+        <button type="submit" class="floor-submit-btn">Показати</button>
+    </form>
+</div>
+
+<!-- Легенда -->
+<div class="legend-container">
+  <div class="legend-item">
+    <div class="legend-color-box legend-empty"></div> Вільна кімната
+  </div>
+  <div class="legend-item">
+    <div class="legend-color-box legend-partial"></div> Частково зайнята
+  </div>
+  <div class="legend-item">
+    <div class="legend-color-box legend-full"></div> Повністю зайнята
+  </div>
+</div>
+<div class="room-tiles-container">
+    <div class="room-plan-grid">
+        {% for room in rooms %}
+            <a href="{% url 'room-detail' room.number %}" class="room-tile room-{{ room.occupancy_status }}">
+                <div class="tile-header">
+                    №{{ room.number }}
+                </div>
+                <div class="tile-body">
+                    <div class="tile-item"><strong>Ціна:</strong> {{ room.price }} ₴</div>
+                    <div class="tile-item"><strong>Місць:</strong> {{ room.capacity }}</div>
+                    <div class="tile-item"><strong>Зайнято:</strong> {{ room.occupied_slots }}</div>
+                    <div class="tile-item"><strong>Вільно:</strong> {{ room.free_slots }}</div>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</div>
+
+{% else %}
+<div class="rooms-list-container">
+    <p class="no-rooms-msg">Жодної кімнати не знайдено.</p>
+</div>
+{% endif %}
+
+{% endblock content %}

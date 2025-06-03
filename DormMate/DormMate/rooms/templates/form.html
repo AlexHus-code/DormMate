@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Подача заявки{% endblock %}
+
+{% block content %}
+<div class="form-container">
+    <h2>Форма подання заявки</h2>
+
+    {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form action="{% url 'form-thank-you' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <div class="form-group">
+            {{ form.room_number.label_tag }}
+            <small class="form-description">Вкажіть номер кімнати, до якої подаєте заявку.</small>
+            {{ form.room_number }}
+            {% if form.room_number.errors %}
+                <div class="form-error">{{ form.room_number.errors }}</div>
+            {% endif %}
+        </div>
+
+        <div class="form-group">
+            {{ form.medical_doc.label_tag }}
+            <small class="form-description">Завантажте медичну довідку з печаткою лікаря про стан здоров’я.</small>
+            {{ form.medical_doc }}
+            {% if form.medical_doc.errors %}
+                <div class="form-error">{{ form.medical_doc.errors }}</div>
+            {% endif %}
+            <img src="{% static 'images/examples/default.png' %}" alt="Приклад медичної довідки" class="example-image">
+        </div>
+
+        <div class="form-group">
+            {{ form.bank_receipt.label_tag }}
+            <small class="form-description">Фото або PDF квитанції про оплату гуртожитку (ПІБ, сума, дата).</small>
+            {{ form.bank_receipt }}
+            {% if form.bank_receipt.errors %}
+                <div class="form-error">{{ form.bank_receipt.errors }}</div>
+            {% endif %}
+            <img src="{% static 'images/examples/default.png' %}" alt="Приклад квитанції" class="example-image">
+        </div>
+
+        <div class="form-group">
+            {{ form.application.label_tag }}
+            <small class="form-description">Заява на поселення, підписана студентом.</small>
+            {{ form.application }}
+            {% if form.application.errors %}
+                <div class="form-error">{{ form.application.errors }}</div>
+            {% endif %}
+            <img src="{% static 'images/examples/default.png' %}" alt="Приклад заяви" class="example-image">
+        </div>
+
+        <div class="form-group">
+            {{ form.student_card.label_tag }}
+            <small class="form-description">Фото або скан студенського квитка з обох сторін.</small>
+            {{ form.student_card }}
+            {% if form.student_card.errors %}
+                <div class="form-error">{{ form.student_card.errors }}</div>
+            {% endif %}
+            <img src="{% static 'images/examples/default.png' %}" alt="Приклад студентського квитка" class="example-image">
+        </div>
+
+        <div class="form-group">
+            {{ form.application_partion_pay.label_tag }}
+            <small class="form-description">Якщо претендуєте на часткову оплату — додайте відповідну заяву.</small>
+            {{ form.application_partion_pay }}
+            {% if form.application_partion_pay.errors %}
+                <div class="form-error">{{ form.application_partion_pay.errors }}</div>
+            {% endif %}
+            <img src="{% static 'images/examples/default.png' %}" alt="Заява на часткову оплату" class="example-image">
+        </div>
+
+        <div class="form-group">
+            {{ form.aplication_parent_pay.label_tag }}
+            <small class="form-description">Заява батьків про допомогу в оплаті (за наявності).</small>
+            {{ form.aplication_parent_pay }}
+            {% if form.aplication_parent_pay.errors %}
+                <div class="form-error">{{ form.aplication_parent_pay.errors }}</div>
+            {% endif %}
+            <img src="{% static 'images/examples/default.png' %}" alt="Заява від батьків" class="example-image">
+        </div>
+
+        <div class="form-group">
+            {{ form.contract.label_tag }}
+            <small class="form-description">Підписаний договір на проживання (PDF або фото).</small>
+            {{ form.contract }}
+            {% if form.contract.errors %}
+                <div class="form-error">{{ form.contract.errors }}</div>
+            {% endif %}
+            <img src="{% static 'images/examples/default.png' %}" alt="Контракт приклад" class="example-image">
+        </div>
+
+        <div class="form-group">
+            {{ form.personal_account.label_tag }}
+            <small class="form-description">Фото документа з особовим рахунком або квитанції з ним.</small>
+            {{ form.personal_account }}
+            {% if form.personal_account.errors %}
+                <div class="form-error">{{ form.personal_account.errors }}</div>
+            {% endif %}
+            <img src="{% static 'images/examples/default.png' %}" alt="Особовий рахунок приклад" class="example-image">
+        </div>
+
+        <div class="form-group">
+            {{ form.comment.label_tag }}
+            <small class="form-description">Необов’язкове поле. Залиште коментар або уточнення до заявки.</small>
+            {{ form.comment }}
+            {% if form.comment.errors %}
+                <div class="form-error">{{ form.comment.errors }}</div>
+            {% endif %}
+        </div>
+
+        <button type="submit" class="btn btn-primary">Надіслати заявку</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Редагування профілю{% endblock %}
+
+{% block content %}
+<div class="edit-profile-wrapper">
+    <h2 class="edit-profile-title">Редагування профілю</h2>
+
+    <form method="post" class="edit-profile-form">
+        {% csrf_token %}
+        <h3 class="form-section-title">Інформація про користувача</h3>
+        {{ profile_form.as_p }}
+        <button type="submit" name="update_profile" class="btn btn-primary">Зберегти</button>
+    </form>
+
+    <hr>
+
+    <form method="post" class="edit-profile-form">
+        {% csrf_token %}
+        <h3 class="form-section-title">Зміна пароля</h3>
+        {{ password_form.as_p }}
+        <button type="submit" name="change_password" class="btn btn-primary">Змінити пароль</button>
+    </form>
+    <a href="{% url 'account' %}" class="secondary-link">Назад</a>
+</div>
+{% endblock %}

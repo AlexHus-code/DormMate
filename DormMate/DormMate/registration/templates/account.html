@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Особистий кабінет{% endblock %}
+
+{% block content %}
+<div class="room-container">
+    <h2>Особистий кабінет — {{ user.username }}</h2>
+    <p><strong>Електронна пошта:</strong> {{ user.email }}</p>
+    <p><strong>Роль:</strong> {{ user.get_role_display }}</p>
+
+    {% if user.role == 'admin' %}
+        <div class="admin-panel">
+            <a href="{% url 'create-admin' %}" class="admin-button">Створити адміністратора</a>
+            <a href="{% url 'add-room' %}" class="admin-button">Додати кімнату</a>
+            <a href="{% url 'user-list' %}" class="admin-button">Список користувачів</a>
+            <a href="{% url 'application-list' %}" class="admin-button">Список заявок</a>
+        </div>
+    {% else %}
+        {% if user.room %}
+            <p><strong>Ваша кімната:</strong> №{{ user.room.number }}</p>
+        {% else %}
+            <p>Ви поки не закріплені за кімнатою.</p>
+        {% endif %}
+        <a href="{% url 'application-list' %}?status=all" class="apply-link">Мої заявки</a>
+    {% endif %}
+        
+        <div class="account-actions"><a href="{% url 'edit-profile' %}" class="secondary-link">Редагувати профіль</a></div>
+    <div class="account-actions">
+        <a href="{% url 'logout' %}" class="logout-button">Вийти</a>
+        <form action="{% url 'delete-account' %}" method="post" class="delete-form" onsubmit="return confirmDelete();">
+            {% csrf_token %}
+            <button type="submit" class="delete-button">Видалити акаунт</button>
+        </form>
+    </div>
+</div>
+
+<script>
+function confirmDelete() {
+    return confirm("Ви впевнені, що хочете видалити акаунт? Це дія незворотна.");
+}
+</script>
+{% endblock %}

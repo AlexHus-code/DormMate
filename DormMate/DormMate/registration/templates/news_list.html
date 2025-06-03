@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Новини{% endblock %}
+
+{% block content %}
+<div class="news-list-wrapper">
+    <h2 class="news-title">Останні новини</h2>
+
+    {% if user.is_staff %}
+        <div class="create-news-button">
+            <a href="{% url 'create-news' %}" class="btn btn-success">+ Додати новину</a>
+        </div>
+    {% endif %}
+
+    {% for item in news %}
+        <div class="news-card">
+            <div class="news-text">
+                <h3>{{ item.title }}</h3>
+                <p>{{ item.content }}</p>
+                <small>Опубліковано: {{ item.created_at|date:"d.m.Y H:i" }}</small>
+                {% if user.is_staff %}
+                    <form method="post" action="{% url 'delete-news' item.id %}" style="margin-top: 10px;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-sm">Видалити</button>
+                    </form>
+                {% endif %}
+            </div>
+            <div class="news-image-wrapper">
+                <img src="{{ item.image.url }}" alt="Зображення" class="news-image">
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Петиції{% endblock %}
+
+{% block content %}
+<div class="petitionlist-wrapper">
+    <h2 class="petitionlist-title">Список петицій</h2>
+
+    <a href="{% url 'create-petition' %}" class="petitionlist-btn" style="margin-bottom: 20px;">
+        Створити петицію
+    </a>
+
+    <div class="petitionlist-controls">
+        <a href="?sort=date" class="petitionlist-btn {% if sort == 'date' %}active{% endif %}">
+            За датою
+        </a>
+        <a href="?sort=votes" class="petitionlist-btn {% if sort == 'votes' %}active{% endif %}">
+            За кількістю голосів
+        </a>
+    </div>
+
+    {% if petitions %}
+        <ul class="petition-list" style="list-style: none; padding: 0;">
+            {% for petition in petitions %}
+                <li class="petitionlist-item">
+                    <h3>
+                        <a href="{% url 'petition-detail' petition.id %}">
+                            {{ petition.title }}
+                        </a>
+                    </h3>
+                    <p>{{ petition.description|linebreaksbr }}</p>
+                    <p><strong>Автор:</strong> {{ petition.author.username }}</p>
+                    <p><strong>Голосів:</strong> {{ petition.vote_count }}</p>
+                    {% if petition.response_count > 0 %}
+                        <p class="response-present">Вже є відповідь</p>
+                    {% else %}
+                        <p class="response-missing">Відповіді немає</p>
+                    {% endif %}
+                    <p><strong>Створено:</strong> {{ petition.created_at|date:"d.m.Y H:i" }}</p>
+
+                    {% if user.is_authenticated %}
+                        {% if user in petition.votes.all %}
+                            <p class="vote-status">Ви вже проголосували</p>
+                        {% else %}
+                            <form method="post" action="{% url 'vote-petition' petition.id %}">
+                                {% csrf_token %}
+                                <button type="submit" class="petitionlist-btn active">Голосувати</button>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <p class="vote-status"><a href="{% url 'login' %}">Увійдіть</a>, щоб голосувати.</p>
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="petitionlist-empty">Наразі петицій немає.</p>
+    {% endif %}
+</div>
+{% endblock %}

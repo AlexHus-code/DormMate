@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block title %}Додати кімнату{% endblock %}
+
+{% block content %}
+<div class="room-creation-page">
+    <div class="room-forms-wrapper">
+        <div class="room-form-block room-form-block--single">
+            <h2 class="room-creation-page__title">Додати одну кімнату</h2>
+            <form method="POST" enctype="multipart/form-data" class="room-form room-form--single">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" name="add_single" class="btn btn--primary btn--single">Зберегти</button>
+            </form>
+        </div>
+
+        <div class="room-form-block room-form-block--group">
+            <h2 class="room-creation-page__title">Додати групу кімнат</h2>
+            <form method="POST" class="room-form room-form--group">
+                {% csrf_token %}
+                {{ group_form.as_p }}
+                <button type="submit" name="add_group" class="btn btn--primary btn--group">Додати групу</button>
+            </form>
+        </div>
+    </div>
+
+    <a href="{% url 'account' %}" class="secondary-link">Назад</a>
+</div>
+{% endblock %}

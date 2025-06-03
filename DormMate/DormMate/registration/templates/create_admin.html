@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Створити адміністратора{% endblock %}
+
+{% block content %}
+<div class="edit-profile-wrapper">
+    <h2 class="edit-profile-title" >Створення адміністратора</h2>
+    <form method="post" class="edit-profile-form>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="apply-link">Створити</button>
+    </form>
+    <a href="{% url 'account' %}" class="secondary-link">← Назад</a>
+</div>
+{% endblock %}

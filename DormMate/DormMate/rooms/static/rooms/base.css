@@ -1,0 +1,2196 @@
+/* Общие стили */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f8ff;
+    color: #1a1a2e;
+    margin: 0;
+    padding: 0;
+}
+html {
+  scroll-behavior: smooth;
+}
+/* Навигация */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000; /* чтобы была поверх контента */
+    background-color: #ffffff;
+    border-bottom: 1px solid #d9e2ef;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    padding: 0.8rem 2rem;
+}
+
+.navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #1a4ca0;
+    text-decoration: none;
+}
+
+.logo:visited,
+.logo:hover,
+.logo:focus,
+.logo:active {
+    color: #1a4ca0;
+    text-decoration: none;
+}
+
+.nav-links a {
+    margin-left: 1.5rem;
+    text-decoration: none;
+    color: #1a4ca0;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #0d2e6e;
+}
+
+/* Контейнер содержимого */
+.room-container, .content-box {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+/* Заголовки */
+h1, h2 {
+    color: #003366;
+    margin-bottom: 1rem;
+}
+
+/* Стили для формы выбора этажа */
+.floor-selector-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    text-align: center;
+}
+
+.floor-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 1.1rem;
+    color: #003366;
+}
+
+.floor-select {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #003366;
+    margin-bottom: 1rem;
+}
+
+.floor-submit-btn {
+    width: 100%;
+    padding: 0.6rem;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    border: none;
+    background-color: #003366;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.floor-submit-btn:hover {
+    background-color: #0055cc;
+}
+
+/* Список комнат */
+.rooms-list-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: white;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.rooms-title {
+    color: #003366;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.rooms-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.room-item {
+    margin-bottom: 0.75rem;
+}
+
+.room-link {
+    color: #0055cc;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.room-link:hover {
+    text-decoration: underline;
+}
+
+.no-rooms-msg {
+    color: #cc0000;
+    font-weight: 600;
+    text-align: center;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+/* Другие стили (как были) */
+.room-title {
+    font-size: 2rem;
+    color: #003366;
+    text-align: center;
+}
+
+.student-list {
+    list-style: disc;
+    padding-left: 1.5rem;
+}
+
+.room-available {
+    padding: 1rem;
+    background-color: #e0f7ff;
+    border: 1px solid #0099cc;
+    border-radius: 8px;
+}
+
+
+
+.apply-link {
+    outline: none;
+    border: none;
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.6rem 1rem;
+    background-color: #1a4ca0;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    font-size: medium;
+    
+}
+
+.apply-link:hover {
+    background-color: #005999;
+}
+
+.delete-button {
+    background-color: #cc0000;
+    color: white;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 1rem;
+}
+
+.delete-button:hover {
+    background-color: #a30000;
+}
+
+
+
+/* Flex-контейнер для содержимого комнаты */
+.room-content-flex {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+/* Левая колонка */
+.room-details {
+    flex: 1;
+}
+
+/* Правая колонка с изображением */
+.room-image {
+    flex: 0 0 300px;
+    max-width: 300px;
+}
+
+.room-img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.secondary-link {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #e0e0e0;
+    color: #003366;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.secondary-link:hover {
+    background-color: #cccccc;
+}
+
+
+.form-field {
+    margin-bottom: 1.2rem;
+}
+
+.form-label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: #003366;
+}
+
+.form-input, .form-select {
+    width: 100%;
+    padding: 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background-color: #fdfdfd;
+    transition: border-color 0.3s ease;
+}
+
+.form-input:focus, .form-select:focus {
+    border-color: #007acc;
+    outline: none;
+}
+
+.errorlist {
+    color: #cc0000;
+    font-size: 0.95rem;
+    margin: 0.2rem 0 0.5rem 0;
+    list-style: none;
+    padding: 0;
+}
+
+.logout-button {
+    display: inline-block;
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #cc0000;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #a30000;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-wrapper {
+    flex: 1 0 auto; /* растягивается, занимает всё доступное место */
+    display: flex;
+    flex-direction: column;
+}
+
+.main-content {
+    flex: 1 0 auto; /* основной контент занимает максимум места */
+    padding-bottom: 1rem; /* можно для отступа от футера */
+}
+
+.site-footer {
+    flex-shrink: 0; /* футер не сжимается, всегда снизу */
+}
+/* --- Стили для футера --- */
+.site-footer {
+    background-color: #ffffff;
+    border-top: 1px solid #d9e2ef;
+    padding: 1.5rem 2rem;
+    font-size: 0.95rem;
+    color: #1a1a2e;
+    box-shadow: 0 -1px 4px rgba(0, 0, 0, 0.03);
+    margin-top: auto;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    gap: 2rem;
+    padding-left: 2rem; /* Смещение вправо */
+}
+
+.footer-contact,
+.footer-social {
+    flex: 1 1 1;
+    
+}
+
+.footer-contact p,
+.footer-social p {
+    margin: 0.2rem 0;
+    color: #003366;
+}
+
+.footer-contact i,
+.footer-social i {
+    margin-right: 0.5rem;
+    color: #0055cc;
+}
+
+.footer-social .social-link {
+    margin-right: 1rem;
+    font-size: 1.2rem;
+    color: #1a4ca0;
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.footer-social .social-link:hover {
+    color: #003366;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 1rem;
+    color: #666;
+    font-size: 0.85rem;
+}
+
+.account-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 2rem;
+}
+
+.logout-button {
+    background-color: #cc0000;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #a30000;
+}
+
+.delete-form {
+    margin: 0;
+}
+
+.delete-button-inline {
+    background-color: #e0e0e0;
+    color: #003366;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.delete-button-inline:hover {
+    background-color: #cccccc;
+}
+
+.admin-panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.admin-button {
+    flex: 1 1 calc(50% - 1rem); /* Две кнопки в строку с отступом */
+    min-width: 180px;
+    text-align: center;
+    background-color: #1a4ca0;
+    color: white;
+    padding: 0.7rem 1.2rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+}
+
+.admin-button:hover {
+    background-color: #0d2e6e;
+}
+
+/* Карточки комнат */
+.room-cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.room-card {
+    background-color: #f8fbff;
+    border: 1px solid #d6e4f0;
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.04);
+    transition: transform 0.2s ease;
+    text-align: left;
+}
+
+.room-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.06);
+}
+
+.room-card h3 {
+    color: #003366;
+    margin-bottom: 0.5rem;
+}
+
+.room-card p {
+    color: #1a1a2e;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+}
+
+.room-card .room-link {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: #0055cc;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.room-card .room-link:hover {
+    text-decoration: underline;
+}
+
+
+/* Плотная квадратная сетка, как план эвакуации */
+.rooms-grid-plan-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+.room-plan-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 4px;
+}
+
+.room-square {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    background-color: #f0f4ff;
+    border: 2px solid #003366;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+    position: relative;
+}
+
+.room-square:hover {
+    background-color: #d6e4f9;
+}
+
+.room-number {
+    color: #003366;
+    font-weight: bold;
+    font-size: 1rem;
+}
+/* Стили для комнат в общем стиле сайта */
+.room-empty {
+    background-color: #f0f4ff; /* очень светлый синий фон, как у .room-plan-grid */
+    border: 2px solid #003366; /* основной синий */
+    color: #003366;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.room-empty:hover {
+    background-color: #d6e4f9; /* чуть темнее при наведении */
+}
+
+.room-partial {
+    background-color: #cce0ff; /* светлый синий с акцентом */
+    border: 2px solid #0055cc; /* более яркий синий */
+    color: #003366;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.room-partial:hover {
+    background-color: #99c2ff;
+}
+
+.room-full {
+    background-color: #ffe0e0; /* мягкий красный, как в твоём .room-full */
+    border: 2px solid #cc0000;
+    color: #990000;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+    padding: 5px;
+}
+
+.room-full:hover {
+    background-color: #ffb3b3;
+}
+
+/* Легенда для пояснения цветов */
+.legend-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    background: white;
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    font-weight: 600;
+    color: #003366;
+    font-size: 1rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.legend-color-box {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    border: 2px solid transparent;
+}
+
+/* Цвета для цветных квадратиков в легенде */
+.legend-empty {
+    background-color: #f0f4ff;
+    border-color: #003366;
+}
+
+.legend-partial {
+    background-color: #cce0ff;
+    border-color: #0055cc;
+}
+
+.legend-full {
+    background-color: #ffe0e0;
+    border-color: #cc0000;
+}
+.btn-danger {
+    background-color: #cc0000;
+    color: white;
+    border: none;
+    padding: 0.3rem 0.8rem;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-danger:hover {
+    background-color: #a30000;
+}
+.room-section form {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+/* Стиль для select */
+.room-section form select[name="user_id"] {
+    flex-grow: 1;
+    padding: 8px 12px;
+    font-size: 1rem;
+    border: 1.5px solid #1a73e8;
+    border-radius: 6px;
+    background-color: white;
+    color: #1a1a2e;
+    cursor: pointer;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=US-ASCII,%3csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M1 1L5 5L9 1' stroke='%231a1a2e' stroke-width='2'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 10px 6px;
+}
+
+.room-section form select[name="user_id"]:focus {
+    outline: none;
+    border-color: #1558d6;
+    box-shadow: 0 0 5px rgba(21, 88, 214, 0.5);
+}
+
+/* Стиль для кнопки "Добавить" */
+.room-section form button.btn-primary {
+    padding: 8px 16px;
+    font-size: 1rem;
+    background-color: #003366;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.room-section form button.btn-primary:hover {
+    background-color: #1558d6;
+}
+
+.btn-primary {
+    background-color: #003366; /* стандартный синий */
+    color: white;
+    border: none;
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #003366;
+}
+.student-list {
+    list-style: none; /* Убираем стандартные маркеры */
+    padding-left: 0;  /* Убираем отступ слева */
+    margin: 0;
+    max-width: 400px; /* Можно ограничить ширину */
+    border: 1px solid #d9e2ef;
+    border-radius: 8px;
+    background-color: #f9fbff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.student-list li {
+    padding: 10px 16px;
+    border-bottom: 1px solid #d9e2ef;
+    font-size: 1rem;
+    color: #1a1a2e;
+    display: flex;
+    justify-content: space-between; /* Имя слева, кнопка справа */
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.student-list li:last-child {
+    border-bottom: none; /* Убираем линию у последнего элемента */
+}
+
+.student-list li:hover {
+    background-color: #e6f2ff;
+}
+
+/* Кнопка удаления рядом с именем */
+.student-list form button {
+    background-color: #cc0000;
+    border: none;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.3s ease;
+}
+
+.student-list form button:hover {
+    background-color: #a30000;
+}
+.room-tiles-container {
+    max-width: 1100px;
+    margin: 2rem auto;
+    padding: 1rem;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+/* Сетка карточек — максимум 6 в ряд */
+.room-plan-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1rem;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+/* Компактная карточка */
+.room-tile {
+    display: flex;
+    flex-direction: column;
+    padding: 0.6rem;
+    background-color: #ffffff;
+    border-radius: 8px;
+    border: 3px solid #003366; /* равномерная толщина рамки */
+    border-left-width: 5px; /* левая часть шире */
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.3s ease;
+    font-size: 0.78rem;
+    cursor: pointer;
+}
+
+/* Левая часть рамки по статусу */
+.room-empty {
+    border-left-color: #28a745;
+}
+
+.room-partial {
+    border-left-color: #ffc107;
+}
+
+.room-full {
+    border-left-color: #dc3545;
+}
+
+/* Эффект при наведении: заливка цветом статуса */
+.room-empty:hover {
+    background-color: #d4edda; /* светло-зеленый фон */
+}
+
+.room-partial:hover {
+    background-color: #fff3cd; /* светло-желтый фон */
+}
+
+.room-full:hover {
+    background-color: #f8d7da; /* светло-красный фон */
+}
+
+/* При наведении карточка немного поднимается */
+.room-tile:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Заголовок карточки */
+.tile-header {
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 0.4rem;
+    color: #222;
+}
+
+/* Информация внутри карточки */
+.tile-body {
+    display: grid;
+    gap: 0.25rem;
+}
+
+.tile-item {
+    background: #f0f0f0;
+    padding: 0.25rem 0.4rem;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* Легенда */
+.legend-container {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem auto 2rem;
+    font-size: 0.9rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.legend-color-box {
+    width: 18px;
+    height: 18px;
+    border-radius: 4px;
+    border: 2px solid #003366;
+}
+
+.legend-empty {
+    background-color: #28a745;
+}
+.legend-partial {
+    background-color: #ffc107;
+}
+.legend-full {
+    background-color: #dc3545;
+}
+
+
+.userlist-wrapper {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #f9fafb;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.05);
+}
+
+.userlist-header {
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.userlist-header h2 {
+    font-size: 28px;
+    font-weight: 600;
+    color: #333;
+}
+
+.userlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.userlist-item {
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s ease;
+}
+
+.userlist-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+}
+
+.user-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.user-name {
+    font-weight: 600;
+    font-size: 16px;
+    color: #1f2937;
+}
+
+.user-role {
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.user-email {
+    font-size: 13px;
+    color: #9ca3af;
+}
+
+.user-room {
+    font-size: 14px;
+    color: #374151;
+    font-weight: 500;
+}
+
+.userlist-empty {
+    text-align: center;
+    padding: 20px;
+    color: #6b7280;
+    font-style: italic;
+}
+
+.userlist-back {
+    text-align: center;
+    margin-top: 24px;
+}
+
+.btn-back {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #3b82f6;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-back:hover {
+    background-color: #2563eb;
+}
+
+.applist-wrapper {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.05);
+}
+
+.applist-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 24px;
+}
+
+.applist-filters {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.applist-btn {
+    padding: 10px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: #f3f4f6;
+    text-decoration: none;
+    color: #374151;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.applist-btn:hover {
+    background: #e5e7eb;
+}
+
+.applist-btn.active {
+    background-color: #3b82f6;
+    color: white;
+    border-color: #3b82f6;
+}
+
+.applist-table-wrapper {
+    overflow-x: auto;
+}
+
+.applist-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    color: #111827;
+}
+
+.applist-table th, .applist-table td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #e5e7eb;
+    text-align: left;
+}
+
+.applist-table th {
+    background: #f9fafb;
+    font-weight: 600;
+}
+
+.applist-note-return {
+    color: green;
+    font-weight: bold;
+    font-size: 13px;
+    display: block;
+}
+
+.applist-note-previous {
+    color: orange;
+    font-weight: 500;
+    font-size: 13px;
+    display: block;
+}
+
+.applist-view-link {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.applist-view-link:hover {
+    text-decoration: underline;
+}
+
+.applist-empty {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #6b7280;
+}
+.appdetail-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.appdetail-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.appdetail-info p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #374151;
+}
+
+.appdetail-status {
+    font-weight: bold;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.status-approved {
+    background: #d1fae5;
+    color: #065f46;
+}
+
+.status-rejected {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+.status-pending {
+    background: #fef9c3;
+    color: #92400e;
+}
+
+.appdetail-section {
+    margin-top: 30px;
+}
+
+.appdetail-subtitle {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #111827;
+}
+
+.appdetail-files {
+    list-style: disc;
+    padding-left: 20px;
+    color: #1e40af;
+}
+
+.appdetail-files a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.appdetail-files a:hover {
+    text-decoration: underline;
+}
+
+.appdetail-divider {
+    margin: 30px 0;
+    border: none;
+    border-top: 1px solid #e5e7eb;
+}
+
+.appdetail-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+}
+
+.appdetail-btn {
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: 500;
+    text-decoration: none;
+    color: white;
+    transition: 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.appdetail-btn.success {
+    background: #10b981;
+}
+
+.appdetail-btn.danger {
+    background: #ef4444;
+}
+
+.appdetail-btn.warning {
+    background: #f59e0b;
+}
+
+.appdetail-btn:hover {
+    opacity: 0.9;
+}
+
+.appdetail-back {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.appdetail-return-link {
+    color: #3b82f6;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.appdetail-return-link:hover {
+    text-decoration: underline;
+}
+.appdetail-reset-group {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+}
+
+.appdetail-reset-text {
+    margin: 0;
+    font-style: italic;
+    color: #374151;
+    font-size: 16px;
+}
+
+.application-detail-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.application-info p {
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 16px;
+}
+
+.attachment-list {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.attachment-list li a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.attachment-list li a:hover {
+    text-decoration: underline;
+}
+
+.appdetail-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    transition: 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.appdetail-btn.success {
+    background-color: #10b981;
+    color: white;
+}
+
+.appdetail-btn.danger {
+    background-color: #ef4444;
+    color: white;
+}
+
+.appdetail-btn.warning {
+    background-color: #f59e0b;
+    color: white;
+}
+
+.appdetail-reset-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.appdetail-reset-text {
+    margin: 0;
+    font-style: italic;
+    color: #374151;
+    font-size: 16px;
+}
+
+.admin-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 10px;
+    flex-wrap: wrap;
+}
+
+
+/* Обертка для каждого поля */
+.room-form p {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.25rem;
+}
+
+/* Стили для лейблов */
+.room-form label {
+    font-weight: 600;
+    color: #1a4ca0;
+    margin-bottom: 0.35rem;
+    font-size: 1rem;
+    user-select: none;
+}
+
+/* Стили для текстовых инпутов, textarea и file input */
+.room-form input[type="text"],
+.room-form input[type="number"],
+.room-form input[type="file"],
+.room-form input[type="decimal"],
+.room-form input[type="email"],
+.room-form textarea,
+.room-form select {
+    padding: 0.5rem 0.75rem;
+    border: 1.8px solid #d9e2ef;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #1a1a2e;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    background-color: #fafcff;
+    outline-offset: 2px;
+}
+
+/* Стили при фокусе */
+.room-form input[type="text"]:focus,
+.room-form input[type="number"]:focus,
+.room-form input[type="file"]:focus,
+.room-form input[type="decimal"]:focus,
+.room-form input[type="email"]:focus,
+.room-form textarea:focus,
+.room-form select:focus {
+    border-color: #1a4ca0;
+    box-shadow: 0 0 6px rgba(26, 76, 160, 0.4);
+    background-color: #fff;
+    outline: none;
+}
+
+/* Стили для textarea */
+.room-form textarea {
+    resize: vertical;
+    min-height: 80px;
+    max-height: 200px;
+}
+
+/* Стили для file input */
+.room-form input[type="file"] {
+    padding: 0.4rem 0.75rem;
+    background-color: #f0f4ff;
+    cursor: pointer;
+}
+
+/* Ошибки */
+.room-form .errorlist {
+    color: #d9534f;
+    font-size: 0.875rem;
+    margin-top: -0.8rem;
+    margin-bottom: 0.8rem;
+}
+
+/* Кнопки */
+.btn--primary {
+    cursor: pointer;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 1rem;
+    color: white;
+    background-color: #1a4ca0;
+    transition: background-color 0.3s ease;
+    align-self: flex-start;
+    margin-top: 1rem;
+}
+
+.btn--primary:hover,
+.btn--primary:focus {
+    background-color: #0d2e6e;
+    outline: none;
+}
+
+/* Дополнительно — стили контейнеров и заголовков */
+
+.room-creation-page {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem 1rem;
+    font-family: Arial, sans-serif;
+}
+
+.room-creation-page__title {
+    font-size: 1.8rem;
+    color: #1a4ca0;
+    margin-bottom: 1rem;
+}
+
+.room-forms-wrapper {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.room-form-block {
+    flex: 1 1 48%;
+    background: #f9fbff;
+    border: 1px solid #d9e2ef;
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 3px rgba(26, 76, 160, 0.1);
+}
+
+.room-creation-page__back-link {
+    display: inline-block;
+    margin-top: 2rem;
+    color: #1a4ca0;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.room-creation-page__back-link:hover {
+    color: #0d2e6e;
+}
+
+
+.form-container {
+    max-width: 650px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f9fbff;
+    border: 1px solid #d9e2ef;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.form-container h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+    color: #1a4ca0;
+    text-align: center;
+}
+
+/* Группы полей формы */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+}
+
+/* Лейблы */
+.form-group label {
+    font-weight: 600;
+    color: #1a4ca0;
+    margin-bottom: 0.4rem;
+    font-size: 1rem;
+}
+
+/* Инпуты, select и textarea */
+.form-group input[type="text"],
+.form-group input[type="file"],
+.form-group input[type="number"],
+.form-group input[type="email"],
+.form-group textarea,
+.form-group select {
+    padding: 0.6rem 0.75rem;
+    border: 1.8px solid #d9e2ef;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #1a1a2e;
+    background-color: #fafcff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #1a4ca0;
+    box-shadow: 0 0 6px rgba(26, 76, 160, 0.4);
+    background-color: #fff;
+    outline: none;
+}
+
+/* Текстовая область */
+.form-group textarea {
+    resize: vertical;
+    min-height: 80px;
+    max-height: 200px;
+}
+
+/* Ошибки */
+.form-error {
+    color: #d9534f;
+    font-size: 0.875rem;
+    margin-top: 0.3rem;
+}
+
+/* Сообщения (успех/ошибка) */
+.messages {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 1rem;
+}
+
+.messages li {
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    font-weight: 500;
+}
+
+.messages li.success {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.messages li.error {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Кнопка */
+.btn.btn-primary {
+    display: inline-block;
+    background-color: #1a4ca0;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn.btn-primary:hover,
+.btn.btn-primary:focus {
+    background-color: #0d2e6e;
+    outline: none;
+}
+
+.thank-you-container {
+    max-width: 600px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: #f9f9f9;
+    
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+.thank-you-title {
+    font-size: 2rem;
+    color: #2e5a88;
+    margin-bottom: 1rem;
+}
+
+.thank-you-message {
+    font-size: 1.1rem;
+    color: #333;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+.btn.btn-primary {
+    background-color: #2e5a88;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+.btn.btn-primary:hover {
+    background-color: #23466d;
+}
+
+.form-container {
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+}
+
+.form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container label {
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-container input[type="text"],
+.form-container textarea,
+.form-container select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+}
+
+.form-container input[type="text"]:focus,
+.form-container textarea:focus,
+.form-container select:focus {
+    border-color: #1e40af;
+    outline: none;
+}
+
+.form-container .btn {
+    margin-top: 20px;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    border: none;
+}
+
+.form-container .btn-primary {
+    background-color:  #1e40af;;
+    color: #fff;
+}
+
+.form-container .btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.form-container .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+    margin-left: 10px;
+}
+
+.form-container .btn-secondary:hover {
+    background-color: #545b62;
+}
+
+.form-text {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.text-danger {
+    color: red;
+    font-size: 14px;
+}
+
+.petitionlist-wrapper {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 24px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+.petitionlist-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 24px;
+}
+
+.petitionlist-controls {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+}
+
+.petitionlist-btn {
+    margin-bottom: 10px;
+    padding: 10px 16px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    background: #f3f4f6;
+    text-decoration: none;
+    color: #374151;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.petitionlist-btn:hover {
+    background: #e5e7eb;
+}
+
+.petitionlist-btn.active {
+    background-color: #003366;
+    color: white;
+    border-color: #003366;
+    
+}
+
+.petitionlist-item {
+    border: 1px solid #e5e7eb;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+    background: #fafafa;
+    transition: box-shadow 0.3s ease;
+}
+
+.petitionlist-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+.petitionlist-item h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+    color: #2563eb;
+}
+
+.petitionlist-item h3 a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.petitionlist-item h3 a:hover {
+    text-decoration: underline;
+}
+
+.petitionlist-item p {
+    margin: 6px 0;
+    font-size: 15px;
+    color: #374151;
+}
+
+.petitionlist-item .response-present {
+    color: green;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.petitionlist-item .response-missing {
+    color: gray;
+    font-style: italic;
+}
+
+.petitionlist-item .vote-status {
+    font-style: italic;
+    font-size: 14px;
+    color: #6b7280;
+}
+
+.petitionlist-empty {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #6b7280;
+}
+.petitiondetail-wrapper {
+    max-width: 900px;
+    margin: 40px auto;
+    background: #fff;
+    padding: 28px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+
+.petitiondetail-title {
+    font-size: 26px;
+    font-weight: bold;
+    color: #1f2937;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.petitiondetail-info p {
+    margin: 10px 0;
+    font-size: 16px;
+    color: #374151;
+}
+
+.petitiondetail-vote {
+    margin: 20px 0;
+}
+
+.petitiondetail-voted {
+    color: #059669;
+    font-style: italic;
+    font-weight: 500;
+}
+
+.petitiondetail-subtitle {
+    font-size: 20px;
+    font-weight: 600;
+    color: #1f2937;
+    margin-top: 30px;
+    margin-bottom: 12px;
+}
+
+.petitiondetail-responses {
+    padding-left: 0;
+    list-style: none;
+}
+
+.petitiondetail-response-item {
+    border: 1px solid #e5e7eb;
+    background: #f9fafb;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.petitiondetail-responder {
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.petitiondetail-empty {
+    font-style: italic;
+    color: #6b7280;
+}
+/* Основной контейнер страницы */
+.news-list-wrapper {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Заголовок страницы */
+.news-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+/* Кнопка "Додати новину" */
+.btn-success {
+    display: inline-block;
+    margin-bottom: 30px;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #003366;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-success:hover {
+    background-color: #044381;
+}
+
+/* Карточка одной новости */
+.news-card {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    background-color: #fafafa;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+/* Блок текста */
+.news-text {
+    flex: 2;
+    min-width: 250px;
+    max-width: 600px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.news-text h3 {
+    margin-top: 0;
+    font-size: 22px;
+    color: #333;
+}
+
+.news-text p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #555;
+}
+
+/* Время публикации */
+.news-text small {
+    display: block;
+    margin-top: 10px;
+    color: #888;
+    font-size: 14px;
+}
+
+/* Картинка справа */
+.news-image-wrapper {
+    flex-shrink: 0;       /* Не сжимать этот блок меньше заданного */
+    width: 160px;         /* Фиксированная ширина для блока с картинкой */
+    height: 150px;        /* Фиксированная высота */
+    overflow: hidden;     /* Обрезать лишнее */
+    border-radius: 8px;
+    margin-left: 20px;
+}
+
+.news-image {
+    width: 100%;          /* Картинка займет ширину блока */
+    height: 100%;         /* И высоту блока */
+    object-fit: cover;    /* Сохраняет пропорции, обрезая лишнее */
+    display: block;
+}
+
+/* Кнопка удаления */
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    font-size: 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-danger:hover {
+    background-color: #c82333;
+}
+
+/* Адаптация под мобильные устройства */
+@media (max-width: 768px) {
+    .news-card {
+        flex-direction: column;
+    }
+
+    .news-image-wrapper {
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .news-image {
+        max-height: 300px;
+    }
+} 
+.edit-profile-wrapper {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.edit-profile-wrapper h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.edit-profile-wrapper h3 {
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.edit-profile-wrapper form {
+    margin-bottom: 30px;
+}
+
+.edit-profile-wrapper form p {
+    margin-bottom: 15px;
+}
+
+.edit-profile-wrapper label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #444;
+}
+
+.edit-profile-wrapper input[type="text"],
+.edit-profile-wrapper input[type="email"],
+.edit-profile-wrapper input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+    transition: border 0.3s;
+}
+
+.edit-profile-wrapper input:focus {
+    border-color: #007bff;
+    outline: none;
+    background-color: #fff;
+}
+
+.btn {
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+
+.form-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.05);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-description {
+    display: block;
+    font-size: 0.9em;
+    color: #555;
+    margin-bottom: 6px;
+}
+
+.example-image {
+    display: block;
+    max-width: 250px;
+    margin-top: 10px;
+}
+/* === Адаптивные стили для мобильных устройств и разных экранов === */
+
+/* Планшеты и устройства до 1024px */
+@media (max-width: 1024px) {
+    /* Содержимое комнаты становится вертикальным */
+    .room-content-flex {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .room-image {
+        max-width: 100%;
+    }
+    .room-details {
+        width: 100%;
+    }
+    /* Карточки комнат: 2 колонки */
+    .room-cards-grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    }
+    /* Новости: карточки в колонку */
+    .news-card {
+        flex-direction: column;
+    }
+    .news-image-wrapper {
+        margin: 1rem auto;
+    }
+}
+
+/* Мобильные (до 768px) */
+@media (max-width: 768px) {
+    /* Навигация: вертикальное расположение, ссылки сбоку */
+    .navbar-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .nav-links {
+        margin-top: 1rem;
+    }
+    .nav-links a {
+        margin-left: 0;
+        margin-right: 1rem;
+        font-size: 0.95rem;
+    }
+    /* Карточки комнат: 1 колонка */
+    .room-cards-grid {
+        grid-template-columns: 1fr;
+    }
+    /* План города, уменьшенные квадраты */
+    .room-plan-grid {
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
+    }
+    /* Уменьшаем отступы в списках пользователей и заявок */
+    .userlist-wrapper,
+    .applist-wrapper,
+    .petitionlist-wrapper,
+    .application-detail-container {
+        padding: 1rem;
+    }
+    .form-container {
+        padding: 1rem;
+    }
+    /* Футер: вертикальное выравнивание */
+    .footer-container {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    /* Текст в навигации чуть меньше */
+    .logo {
+        font-size: 1.4rem;
+    }
+}
+
+/* Очень маленькие экраны (до 480px) */
+@media (max-width: 480px) {
+    /* Навигация: меньше отступы */
+    .navbar {
+        padding: 0.5rem 1rem;
+    }
+    .logo {
+        font-size: 1.2rem;
+    }
+    .nav-links a {
+        font-size: 0.9rem;
+    }
+    /* Убираем боковую картинку в комнате (чтобы не занимала слишком много) */
+    .room-image {
+        display: none;
+    }
+    /* Содержимое комнаты – без больших отступов */
+    .room-content-flex {
+        padding: 0 1rem;
+    }
+    /* Карточки комнат – меньшие отступы между ними */
+    .room-cards-grid {
+        gap: 1rem;
+    }
+    /* Уменьшаем внутренние отступы футера */
+    .footer-container {
+        padding: 1rem;
+    }
+    /* Текст в заголовках чуть меньше */
+    h1 {
+        font-size: 1.6rem;
+    }
+    h2 {
+        font-size: 1.3rem;
+    }
+    /* Уменьшаем размеры кнопок */
+    .btn, .btn-primary, .btn--primary {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Дополнительные правки для экранов сверхбольшого разрешения (от 1440px и выше) */
+@media (min-width: 1440px) {
+    .navbar-container {
+        max-width: 1400px;
+    }
+    .room-container, .content-box, .rooms-list-container,
+    .room-tiles-container, .admin-panel,
+    .userlist-wrapper, .applist-wrapper, .petitionlist-wrapper,
+    .application-detail-container {
+        max-width: 1200px;
+    }
+    .room-content-flex {
+        gap: 3rem;
+    }
+}

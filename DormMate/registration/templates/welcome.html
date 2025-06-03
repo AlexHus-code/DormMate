@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-{% block title %}Добро пожаловать{% endblock %}
-{% block content %}
-<div class="room-container">
-    <h2>Добро пожаловать, {{ user.username }}!</h2>
-    <p>Вы успешно зарегистрированы 🎉</p>
-    <a href="{% url 'floor-selector' %}" class="apply-link">Перейти на главную</a>
-</div>
-{% endblock %}
